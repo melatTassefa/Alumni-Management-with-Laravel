@@ -13,8 +13,8 @@ use App\Http\Controllers\API\BaseController as BaseController;
 class RegisterController extends BaseController
 {
     public function register(Request $request): JsonResponse
-    {
-        $allowedDepartments = ['Computer Science', 'Business Management', 'Accounting', 'Digital Marketing']; 
+{
+    $allowedDepartments = ['Computer Science', 'Business Management', 'Accounting', 'Digital Marketing']; 
     
     // Validate the incoming request data
     $validator = Validator::make($request->all(), [
@@ -27,12 +27,7 @@ class RegisterController extends BaseController
             'required',
             'regex:/^(\+251-\d{9}|\d{10})$/'
         ],
-        'email' =>[
-            'required',
-            'email',
-            'unique:users,email', // Specify the column name in the users table
-            'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', // Regular expression for gmail
-        ],
+        'email' => 'required|email|unique:users',
         'user_type' => 'required|in:student,alumni',
         'linkedin_profile' => 'required|url',
         'department' => 'required|in:' . implode(',', $allowedDepartments),
